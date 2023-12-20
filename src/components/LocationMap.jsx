@@ -12,42 +12,52 @@ import {
   InfoWindow,
 } from "@vis.gl/react-google-maps";
 
-const api_key = import.meta.env.VITE_API_KEY;
-const map_id = import.meta.env.VITE_MAP_ID;
-
-console.log("API Key: ", api_key);
-console.log("MAP_ID: ", map_id);
-
 // Following https://www.youtube.com/watch?v=PfZ4oLftItk&list=PL2rFahu9sLJ2QuJaKKYDaJp0YqjFCDCtN
 
-export default function LocationMap() {
-  const position = { lat: 53.54, lng: 10 };
-  const [open, setOpen] = useState(false);
-
+export default function LocationMap({
+  userCoordinates,
+  partnerCoordinates,
+  midpoint,
+  setMidpoint,
+  open,
+  setOpen,
+}) {
+  const isValidCoordinates =
+    userCoordinates.lat !== null &&
+    userCoordinates.lng !== null &&
+    partnerCoordinates.lat !== null &&
+    partnerCoordinates.lng !== null;
+  console.log("user coords: ", userCoordinates);
+  console.log("partner coords", partnerCoordinates);
+  console.log("midpoint:", midpoint);
   return (
     <>
-      <APIProvider apiKey={import.meta.env.VITE_API_KEY}>
-        <div style={{ height: "100vh", width: "100%" }}>
-          <Map zoom={9} center={position} mapId={import.meta.env.VITE_MAP_ID}>
-            <AdvancedMarker position={position} onClick={() => setOpen(true)}>
-              <Pin
-                background={"grey"}
-                borderColor={"green"}
-                glyphColor={"purple"}
-              />
-            </AdvancedMarker>
+      {isValidCoordinates && ( // Conditionally render if there's a valid midpoint
+        <APIProvider apiKey={import.meta.env.VITE_API_KEY}>
+          <div style={{ height: "100vh", width: "100%" }}>
+            <Map
+              zoom={14}
+              center={midpoint}
+              mapId={import.meta.env.VITE_MAP_ID}
+            >
+              <AdvancedMarker
+                position={midpoint}
+                onClick={() => setOpen(true)}
+              ></AdvancedMarker>
 
-            {open && (
-              <InfoWindow
-                position={position}
-                onCloseClick={() => setOpen(false)}
-              >
-                <p>I'm in Hamburg</p>
-              </InfoWindow>
-            )}
-          </Map>
-        </div>
-      </APIProvider>
+              {open && (
+                <InfoWindow
+                  position={midpoint}
+                  onCloseClick={() => setOpen(false)}
+                >
+                  <p>Hello!</p>
+                </InfoWindow>
+              )}
+            </Map>
+          </div>
+        </APIProvider>
+      )}
+      {!isValidCoordinates && <p></p>}
     </>
   );
 }
