@@ -16,6 +16,7 @@ import {
   Pin,
   InfoWindow,
 } from "@vis.gl/react-google-maps";
+import PlacesMap from "./components/PlacesMap.jsx";
 
 function App() {
   // State variables for addresses and error
@@ -125,22 +126,7 @@ function App() {
         open={open}
         setOpen={setOpen}
       />
-      <Suggestions
-        userCoordinates={userCoordinates}
-        partnerCoordinates={partnerCoordinates}
-      />
-      {/* <TubeFinder
-        userOptions={userOptions}
-        dateOptions={dateOptions}
-        loadUserOptions={loadUserOptions}
-        loadDateOptions={loadDateOptions}
-        handleUserSelectChange={handleUserSelectChange}
-        handleDateSelectChange={handleDateSelectChange}
-        userStation={userStation}
-        dateStation={dateStation}
-      />
-      {userStation && <p>User station: {userStation}</p>}
-      {dateStation && <p>Date station: {dateStation}</p>} */}
+      <PlacesMap midpoint={midpoint} />
     </>
   );
 }
