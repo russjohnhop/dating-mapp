@@ -118,15 +118,13 @@ function App() {
         error={error}
         handleSubmit={handleSubmit}
       />
-      <LocationMap
-        userCoordinates={userCoordinates}
-        partnerCoordinates={partnerCoordinates}
-        midpoint={midpoint}
-        setMidpoint={setMidpoint}
-        open={open}
-        setOpen={setOpen}
-      />
-      <PlacesMap midpoint={midpoint} />
+      {userCoordinates.lat &&
+        userCoordinates.lng &&
+        partnerCoordinates.lat &&
+        partnerCoordinates.lng &&
+        // Check if both user and partner coordinates are available
+        midpoint.lat !== 0 &&
+        midpoint.lng !== 0 && <PlacesMap midpoint={midpoint} />}
     </>
   );
 }

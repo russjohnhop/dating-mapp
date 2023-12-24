@@ -44,7 +44,7 @@ export default function LocationForm({
         onSelect={handleSelectUser}
         searchOptions={{
           componentRestrictions: {
-            country: "uk",
+            country: ["uk"],
           },
         }}
       >
@@ -69,7 +69,7 @@ export default function LocationForm({
         )}
       </PlacesAutocomplete>
 
-      <h1>Enter Your Date's Location</h1>
+      <h1>Enter Your Dates Location</h1>
 
       <PlacesAutocomplete
         value={partnerAddress}
