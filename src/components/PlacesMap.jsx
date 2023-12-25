@@ -17,7 +17,7 @@ export default function PlacesMap({ midpoint }) {
     // Initialize the map
     const map = new window.google.maps.Map(document.getElementById("map"), {
       center: { lat: midpoint.lat, lng: midpoint.lng },
-      zoom: 14,
+      zoom: 16,
     });
 
     const marker = new window.google.maps.Marker({
@@ -41,37 +41,45 @@ export default function PlacesMap({ midpoint }) {
       "zoo",
     ];
 
-    let request = {
-      location: midpoint,
-      radius: "500",
-      type: ["restaurant"],
-    };
+    // types.forEach((type) => {
+    //   let request = {
+    //     location: midpoint,
+    //     radius: "500",
+    //     type: [type],
+    //   };
+    // });
 
-    let service = new google.maps.places.PlacesService(map);
-    service.nearbySearch(request, callback);
+    // let request = {
+    //   location: midpoint,
+    //   radius: "500",
+    //   type: ["restaurant"],
+    // };
 
-    function callback(results, status) {
-      if (status == google.maps.places.PlacesServiceStatus.OK) {
-        for (var i = 0; i < results.length; i++) {
-          createMarker(results[i]);
-        }
-      }
-    }
+    // let service = new google.maps.places.PlacesService(map);
+    // service.nearbySearch(request, callback);
 
-    function createMarker(place) {
-      if (!place.geometry || !place.geometry.location) return;
+    // function callback(results, status) {
+    //   if (status == google.maps.places.PlacesServiceStatus.OK) {
+    //     for (var i = 0; i < results.length; i++) {
+    //       createMarker(results[i]);
+    //     }
+    //   }
+    // }
 
-      const placeMarker = new google.maps.Marker({
-        map,
-        // Make marker different
-        position: place.geometry.location,
-      });
+    // function createMarker(place) {
+    //   if (!place.geometry || !place.geometry.location) return;
 
-      google.maps.event.addListener(placeMarker, "click", () => {
-        infowindow.setContent(place.name || "");
-        infowindow.open(map);
-      });
-    }
+    //   const placeMarker = new google.maps.Marker({
+    //     map,
+    //     // Make marker different
+    //     position: place.geometry.location,
+    //   });
+
+    //   google.maps.event.addListener(placeMarker, "click", () => {
+    //     infowindow.setContent(place.name || "");
+    //     infowindow.open(map);
+    //   });
+    // }
   }, [midpoint]);
 
   return <div id="map" style={{ height: "400px", width: "100%" }}></div>;
