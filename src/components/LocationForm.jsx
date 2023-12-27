@@ -7,19 +7,11 @@ import PlacesAutocomplete, {
 export default function LocationForm({
   userAddress,
   setUserAddress,
-  userCoordinates,
   setUserCoordinates,
   partnerAddress,
   setPartnerAddress,
-  partnerCoordinates,
   setPartnerCoordinates,
-  error,
-  handleSubmit,
 }) {
-  // const [coordinates, setCoordinates] = React.useState({
-  //   lat: null,
-  //   lng: null,
-  // });
   const handleSelectUser = async (value) => {
     const results = await geocodeByAddress(value);
     const latLng = await getLatLng(results[0]);
@@ -35,8 +27,13 @@ export default function LocationForm({
   };
 
   return (
-    <div>
-      <h1>Enter Your Location</h1>
+    <div className="font-mono bg-black text-white w-full pb-4 ">
+      <h1 className="flex text-xl align-middle justify-center m-4 font-mono bg-black text-white pt-3">
+        Let's meet in the middle
+      </h1>
+      <h2 className="pb-2 flex align-middle justify-center">
+        Enter Your Location
+      </h2>
 
       <PlacesAutocomplete
         value={userAddress}
@@ -49,17 +46,23 @@ export default function LocationForm({
         }}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-          <div key={suggestions.description}>
+          <div
+            key={suggestions.description}
+            className="text-black pb-3 flex align-middle justify-center"
+          >
             <input {...getInputProps({ placeholder: "Type address" })} />
             <div>
               {loading ? <div>...loading</div> : null}
 
-              {suggestions.map((suggestion) => {
+              {suggestions.map((suggestion, index) => {
                 const style = {
                   backgroundColor: suggestion.active ? "#41b6e6" : "#fff",
                 };
                 return (
-                  <div {...getSuggestionItemProps(suggestion, { style })}>
+                  <div
+                    key={index}
+                    {...getSuggestionItemProps(suggestion, { style })}
+                  >
                     {suggestion.description}
                   </div>
                 );
@@ -69,25 +72,41 @@ export default function LocationForm({
         )}
       </PlacesAutocomplete>
 
-      <h1>Enter Your Dates Location</h1>
+      <h2 className="pb-2 flex align-middle justify-center">
+        Enter Your Date's Location
+      </h2>
 
       <PlacesAutocomplete
         value={partnerAddress}
         onChange={setPartnerAddress}
         onSelect={handleSelectPartner}
+        searchOptions={{
+          componentRestrictions: {
+            country: ["uk"],
+          },
+        }}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-          <div key={suggestions.description}>
-            <input {...getInputProps({ placeholder: "Type address" })} />
+          <div
+            key={suggestions.description}
+            className="text-black pb-3 flex align-middle justify-center"
+          >
+            <input
+              className="flex align-middle justify-center"
+              {...getInputProps({ placeholder: "Type address" })}
+            />
             <div>
               {loading ? <div>...loading</div> : null}
 
-              {suggestions.map((suggestion) => {
+              {suggestions.map((suggestion, index) => {
                 const style = {
                   backgroundColor: suggestion.active ? "#41b6e6" : "#fff",
                 };
                 return (
-                  <div {...getSuggestionItemProps(suggestion, { style })}>
+                  <div
+                    key={index}
+                    {...getSuggestionItemProps(suggestion, { style })}
+                  >
                     {suggestion.description}
                   </div>
                 );
